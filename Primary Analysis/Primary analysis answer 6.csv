@@ -1,0 +1,33 @@
+﻿state,Disease1,Disease2,Avg AQI
+Andaman and Nicobar Islands,Acute Diarrheal Disease,Fever with Rash,57.71
+Andhra Pradesh,Acute Diarrheal Disease,Cholera,77.90
+Arunachal Pradesh,Acute Diarrheal Disease,Chickenpox,54.44
+Assam,Acute Diarrheal Disease,Food Poisoning,114.42
+Bihar,Acute Diarrheal Disease,Dengue,155.98
+Chandigarh,Cholera,,141.08
+Chhattisgarh,Acute Diarrheal Disease,Cholera,79.08
+Delhi,Dengue,Measles,205.07
+Gujarat,Acute Diarrheal Disease,Food Poisoning,110.45
+Haryana,Cholera,Acute Diarrheal Disease,139.11
+Himachal Pradesh,Acute Diarrheal Disease,Hepatitis A,160.24
+Jammu and Kashmir,Dengue,Hepatitis A,71.22
+Jharkhand,Malaria,Acute Diarrheal Disease,164.94
+Karnataka,Acute Diarrheal Disease,Cholera,62.50
+Kerala,Food Poisoning,Acute Diarrheal Disease,68.23
+Madhya Pradesh,Acute Diarrheal Disease,Dengue,107.67
+Maharashtra,Acute Diarrheal Disease,Food Poisoning,103.44
+Manipur,Dengue,Food Poisoning,101.28
+Meghalaya,Measles,Acute Diarrheal Disease,62.92
+Mizoram,Food Poisoning,Scrub Typhus,46.62
+Nagaland,Dengue,Acute Diarrheal Disease,80.03
+Odisha,Acute Diarrheal Disease,Food Poisoning,124.92
+Puducherry,Acute Diarrheal Disease,Dengue,56.94
+Punjab,Acute Diarrheal Disease,Cholera,117.28
+Rajasthan,Acute Diarrheal Disease,Dengue,127.72
+Sikkim,Jaundice,Typhoid,53.60
+Tamil Nadu,Acute Diarrheal Disease,Mumps,67.96
+Telangana,Acute Diarrheal Disease,Food Poisoning,80.44
+Tripura,Acute Diarrheal Disease,Dengue,128.48
+Uttar Pradesh,Acute Diarrheal Disease,Food Poisoning,124.74
+Uttarakhand,Dengue,Acute Diarrheal Disease,87.80
+West Bengal,Acute Diarrheal Disease,Food Poisoning,114.54
