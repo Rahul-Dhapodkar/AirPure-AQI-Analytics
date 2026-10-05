@@ -58,7 +58,7 @@ This repository documents that work: the data cleaning and modeling done in SQL,
 ## 🗂️ Repository Structure
 
 ```
-├── Primary Analysis/      → SQL scripts and outputs for the core AQI, disease, and vehicle analysis
+├── Primary Analysis/      → Power Bi visuals and outputs for the core AQI, disease, and vehicle analysis
 ├── Secondary Analysis/    → Externally researched findings (health impact, market, policy, awareness), with sources
 ├── Project Inputs/        → Problem statement, dataset metadata, and supporting source documents
 ├── screenshots/           → Dashboard page images used in this README
