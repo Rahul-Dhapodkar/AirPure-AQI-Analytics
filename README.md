@@ -20,14 +20,14 @@ This repository documents that work: the data cleaning and modeling done in SQL,
 
 ## 🔑 Key Findings
 
-*(Figures below are read directly off the dashboard at its 2024 view unless noted — re-check against the live link if you adjust the filters.)*
+*Figures reflect the dashboard's 2024 view.*
 
-- **Most polluted areas, after applying a minimum-coverage threshold** (a city isn't ranked unless it has enough reporting days to be trustworthy) — the worst-ranked areas include Byrnihat (Assam), Delhi, Hajipur (Bihar), Gurugram, and Ghaziabad.
+- **Most polluted areas, after applying a minimum-coverage threshold** — an area isn't ranked unless it has at least 90 reporting days in the period under review (in the validated Dec 2024–May 2025 ranking, this excluded 38 of 286 candidate areas) — the worst-ranked areas include Byrnihat, Delhi, Hajipur (Bihar), Gurugram, and Ghaziabad. *Byrnihat is listed under Assam in the dataset; it actually sits in Meghalaya's Ri-Bhoi district, on the Assam–Meghalaya border, and is sometimes reported under either state depending on the source.*
 - **PM10 is the dominant pollutant nationally**, showing up as the top pollutant in effectively every state reviewed (e.g. Andhra Pradesh, Assam, Bihar, Chandigarh), with PM2.5 consistently the second most common.
-- **Air quality is sharply seasonal** — average AQI climbs to roughly 155–180 in November and December and drops to its lowest, around 55–65, in July and August. January through December fluctuates by close to 3x across the year.
-- **Weekend vs. weekday AQI shows no consistent direction** across metro areas — some cities improve on weekends (Bengaluru −3.3, Pune −3.0, Ahmedabad −1.7), others get slightly worse (Chennai +1.9, Kolkata +1.0), and a few barely move (Mumbai, Hyderabad). There's no single "weekends are cleaner" pattern nationally.
-- **Disease case fatality rate (CFR) is highest in Goa (2.65%) and Gujarat (2.64%)** among states with a meaningful case volume (states with very few reported cases are excluded, since a handful of cases can produce a misleadingly extreme rate).
-- **Kerala has the highest total reported case volume** (~13K), followed by Maharashtra (~11K) and Madhya Pradesh (~9.6K) — though case volume and fatality rate don't move together, which is worth noting on its own.
+- **Air quality is sharply seasonal** — AQI varies roughly 3x across the year (≈55–65 in Jul–Aug vs. ≈155–180 in Nov–Dec).
+- **Weekend vs. weekday AQI differences are small and inconsistent across metro areas** — within roughly ±3–4 AQI points either way (Bengaluru −3.3, Pune −3.0, Ahmedabad −1.7, Chennai +1.9, Kolkata +1.0, Mumbai and Hyderabad barely move) — not large or consistent enough to say weekends are materially cleaner.
+- **Goa and Gujarat have the highest case fatality rate among states with a meaningful case volume** (states with fewer than 100 total reported cases are excluded, since a handful of cases can produce a misleadingly extreme rate) — both sit at roughly 2.6%, well above most other states in the ranking; the gap between the two of them is negligible.
+- **Kerala has the highest total reported case volume** (~13K), followed by Maharashtra (~11K) and Madhya Pradesh (~9.6K) — case volume and fatality rate don't move together, which is worth noting on its own.
 - **EV adoption shows no clear relationship with AQI** even among the states with the highest adoption rates — adoption is still in the low single digits everywhere, so it's too early for it to be moving the needle on air quality.
 - **Delhi, Uttar Pradesh, and Maharashtra rank highest on a population-weighted market opportunity score**, making them the clearest early targets for a product launch; Delhi alone also tops the metro-level market-potential ranking (AQI × population) by a wide margin.
 
@@ -46,10 +46,19 @@ This repository documents that work: the data cleaning and modeling done in SQL,
 
 ---
 
+## 💡 Recommendations for AirPure
+
+1. **Launch first in Delhi NCR** — it combines the highest market opportunity score with some of the worst severity readings in the dataset.
+2. **Concentrate marketing spend October through January** — AQI consistently peaks in this window, matching the dashboard's seasonal marketing-intensity recommendation.
+3. **Don't position the product around the EV trend as a demand driver** — the data shows no relationship between EV adoption and improved AQI yet.
+4. **Treat PM10 (and secondarily PM2.5) filtration as the core product requirement**, not an afterthought — it's the dominant pollutant in nearly every state reviewed.
+
+---
+
 ## 🗂️ Repository Structure
 
 ```
-├── Primary Analysis/      → Power BI visuals and outputs for the core AQI, disease, and vehicle analysis
+├── Primary Analysis/      → SQL scripts and outputs for the core AQI, disease, and vehicle analysis
 ├── Secondary Analysis/    → Externally researched findings (health impact, market, policy, awareness), with sources
 ├── Project Inputs/        → Problem statement, dataset metadata, and supporting source documents
 ├── screenshots/           → Dashboard page images used in this README
@@ -60,12 +69,13 @@ This repository documents that work: the data cleaning and modeling done in SQL,
 
 ## 📊 Data Sources & Methodology
 
-- **Source data:** day-wise state/city AQI readings, state-and-district-level disease outbreak reports, state-and-month vehicle registration records by fuel type, and state population projections — provided as part of the project brief, originally sourced from the Dataful platform.
-- **Cleaning, done in SQL:** duplicate removal, correction of truncated/inconsistent state names, handling of missing values (set to null rather than dropped where the rest of the row was still usable), and exclusion of rows with no usable state or date.
-- **Minimum-coverage threshold:** a city is only included in severity rankings if it has enough reporting days in the selected window — this prevents a city with a handful of readings from outranking one with hundreds.
-- **Minimum-case threshold for CFR:** states with very few total reported cases are excluded from the case-fatality-rate ranking, since a small number of deaths out of a small number of cases produces an extreme, unreliable percentage.
-- **Market Opportunity Score:** a transparent, equally-weighted composite — 50% normalized average AQI severity + 50% normalized population, both scaled 0–1 across states before combining. This is a stated analytical assumption for prioritization purposes, not a measured quantity, and the weighting is disclosed rather than hidden.
+- **Source data:** day-wise state/city AQI readings, state-and-district-level disease outbreak reports, state-and-month vehicle registration records by fuel type, and state population projections — provided as part of the project brief, originally sourced from the Dataful platform. *(Raw file redistribution terms haven't been independently confirmed — if the platform doesn't permit redistributing the raw CSVs, this repo should keep only the processed/aggregated outputs and link back to the source instead.)*
+- **Cleaning, done in SQL:** duplicate removal, correction of truncated/inconsistent state names, handling of missing values (set to null rather than dropped where the rest of the row was still usable), and exclusion of rows with no usable state or date. SQL scripts in Primary Analysis are numbered in the order they were run (e.g. `01_cleaning.sql`, `02_severity_ranking.sql`), so a given result can be traced back to a specific step.
+- **Minimum-coverage threshold:** an area is only included in severity rankings if it has at least 90 reporting days in the selected window — this prevents an area with a handful of readings from outranking one with hundreds. In the validated Dec 2024–May 2025 ranking, this excluded 38 of 286 candidate areas.
+- **Minimum-case threshold for CFR:** states with fewer than 100 total reported cases in the selected period are excluded from the case-fatality-rate ranking (shown directly on the Health Impact page), since a small number of deaths out of a small number of cases produces an extreme, unreliable percentage.
+- **Market Opportunity Score:** a transparent, equally-weighted composite — 50% normalized average AQI severity + 50% normalized population, both scaled 0–1 across states before combining. This is a stated analytical assumption for prioritization purposes, not a measured quantity, and the weighting is disclosed rather than hidden. *It hasn't yet been stress-tested against alternative weightings (e.g. 60/40) — doing so would either strengthen this ranking or reveal that it's sensitive to the weighting choice.*
 - **Metro population figures** used in the market-potential chart came from external city-population data (not part of the original datasets), since the provided population data is state-level only — cited in the Secondary Analysis folder.
+- **Disease data is used to compare reported case and death burden across states, alongside average AQI for the same period — it does not establish that air quality caused these cases.** The disease dataset covers general outbreak/infectious-disease surveillance, not a respiratory- or pollution-linked diagnosis category, so any AQI–health connection here is a side-by-side comparison, not a causal claim.
 
 ---
 
@@ -81,3 +91,7 @@ This repository documents that work: the data cleaning and modeling done in SQL,
 ## 🎯 Why This Approach
 
 The dashboard isn't just built to look complete — every number on it is checkable. Thresholds like minimum data coverage and minimum case volume are deliberate, documented choices; exclusions and known gaps (for example, a handful of states with no AQI monitoring coverage at all) are disclosed rather than smoothed over; and anything that couldn't be answered from the internal data was either clearly sourced externally or explicitly marked as unanswered instead of estimated.
+
+---
+
+**Author:** Rahul Dhapodkar
